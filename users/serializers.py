@@ -5,6 +5,7 @@ from rest_framework.serializers import raise_errors_on_nested_writes
 from rest_framework.utils import model_meta
 
 from users.models import User
+from users.tasks import say_hello_to_new_user
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -71,6 +72,7 @@ class UserSerializer(serializers.ModelSerializer):
                 field = getattr(instance, field_name)
                 field.set(value)
 
+        say_hello_to_new_user()
         return instance
 
     def update(self, instance, validated_data):
@@ -99,4 +101,5 @@ class UserSerializer(serializers.ModelSerializer):
             field = getattr(instance, attr)
             field.set(value)
 
+        say_hello_to_new_user.apply_async(())
         return instance
