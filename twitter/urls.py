@@ -24,9 +24,9 @@ from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
 schema_view = get_schema_view(
     openapi.Info(
-        title="Mais Todos API",
+        title="Twitter API",
         default_version='v1',
-        description="Api  for tweets backup management.",
+        description="Api for tweets backup management.",
         contact=openapi.Contact(email="contato@leobalbino.com"),
     ),
     public=True,
@@ -36,6 +36,7 @@ schema_view = get_schema_view(
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/v1/', include("users.routes"), name="users"),
+    path('api/v1/', include("twitter_api.routes"), name='twitter-users'),
     url('api/docs/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
     path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
